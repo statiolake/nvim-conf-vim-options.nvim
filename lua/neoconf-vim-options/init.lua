@@ -15,9 +15,10 @@ local M = {}
 
 function M.apply(filetype)
   local g_opts = neoconf.get('vim-options._', {})
-  local l_opts = filetype
-      and neoconf.get(string.format('vim-options.%s', filetype), {})
-    or {}
+  local l_opts = {}
+  if filetype and filetype ~= '' then
+    l_opts = neoconf.get(string.format('vim-options.%s', filetype), {})
+  end
   local opts = vim.tbl_deep_extend('force', g_opts, l_opts) or {}
   for opt, value in pairs(opts) do
     vim.opt_local[opt] = value
