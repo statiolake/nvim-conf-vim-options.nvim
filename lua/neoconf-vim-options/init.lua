@@ -1,3 +1,5 @@
+local nc = require 'nvim-conf'
+
 -- vim_options = nc.per_filetype_value {
 --   _ = {
 --     textwidth = 78,
@@ -10,7 +12,9 @@
 local M = {}
 
 function M.apply(filetype)
-  local opts = require 'nvim-conf'.get().vim_options or {}
+  local ctx = nc.Context.new()
+  ctx.filetype = filetype
+  local opts = require 'nvim-conf'.get(ctx).vim_options or {}
   for opt, value in pairs(opts) do
     vim.opt_local[opt] = value
   end
