@@ -13,8 +13,11 @@ local M = {}
 
 function M.apply(filetype)
   local ctx = nc.Context.new()
-  ctx.filetype = filetype
-  local opts = require 'nvim-conf'.get(ctx).vim_options or {}
+  if filetype then
+    ctx.filetype = filetype
+  end
+
+  local opts = require('nvim-conf').get(ctx).vim_options or {}
   for opt, value in pairs(opts) do
     vim.opt_local[opt] = value
   end
